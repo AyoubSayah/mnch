@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="card mb-3 mt-3">
+    <div class="card-body">
+      <h5 class="card-title">Totale caisse de tous les consultations :</h5>
+      <div class="card-text">
+        <div class="row">
+          <div class="col-md-6">
+            Vous avez <b>{{CountAllconsultations}} consultations.</b>
+          </div>
+          <div class="col-md-6">
+            <b>Totale :</b>{{sommeT}} Dinars
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="jumbotron pt-2 mt-3">
+    <div class="row mb-4 mt-2">
+      <b>Veuillez choisir deux dates pour voir le total du votre caisse dans cette période.</b>
+    </div>
+    <form #f5="ngForm" (ngSubmit)="getCaissePerdate(id_doc,f5)">
+      <div class="form-row ">
+        <div class="form-group col-6">
+          <label for="">Date Début :</label>
+          <input type="date" class="form-control" id="" aria-describedby="emailHelp" name="dateD" ngModel>
+        </div>
+        <div class="form-group col-6">
+          <label for="">Date Fin :</label>
+          <input type="date" class="form-control" id="" aria-describedby="emailHelp" name="dateF" ngModel>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-dark pull-right">Chercher</button>
+    </form>
+  </div>
+  <div *ngIf='lengthConsultations > 0 ;else NoConsultations'>
+    <div><b>Vous avez {{lengthConsultations}} consultations dans cette période.</b></div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Patient</th>
+          <th scope="col">prix consultation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor='let consult of myConsultations'>
+          <td>{{consult.id_patient.nom}} {{consult.id_patient.prenom}}</td>
+          <td>{{consult.id_appointment.prix}} Dinars</td>
+        </tr>
+        <tr class="table-info">
+          <td><b>TOTAL</b></td>
+          <td><b>{{somme}} Dinars</b></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #NoConsultations>
+    <div class="alert alert-warning" role="alert">
+      Vous n'avez pas de consultations dans cette période, choisir à nouveau une période . . .
+    </div>
+  </ng-template>
+</div>

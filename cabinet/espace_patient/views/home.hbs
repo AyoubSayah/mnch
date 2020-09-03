@@ -1,0 +1,219 @@
+{{> navbar}}
+{{> flashMsg}}
+
+
+<div class="container">
+  <div class="jumbotron">
+    <div class="row">
+      <div class="col-6">
+        <h1 class="mb-3">Bienvenue ..</h1>
+        <h6 class="mb-3">Voici les médecins les plus proches de votre localisation . </h6>
+        <p> {{geo.city}},{{geo.country}}</p>
+      </div>
+      <div class="col-6">
+        <form method="post" action="/acceuil">
+          <div class="form-group">
+            <h2>Recherche</h2>
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-search"></i></div>
+              </div>
+              <input type="text" class="form-control" id="inlineFormInputGroup"
+                placeholder="chercher un médecin par prénom" name="doctorname">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="">Ou bien chercher avec specialité </label>
+            <select class="custom-select" name="speciality" id="">
+              <option value="0" selected>selectionner spécialité</option>
+              {{#each docs}}
+                <option value="{{this.spec}}">{{this.spec}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <button type="submit" class="btn btn-dark pull-right  ml-5 mr-0">Recherche</button>
+          <br>
+        </form>
+      </div>
+    </div>
+  </div>
+  <br>
+  {{#if docs}}
+  <div class="card-deck mt-5">
+    {{#if user}}
+    {{#each docs}}
+    <aside class="profile-card">
+    <div class="mask-shadow"></div>
+    <header>
+      <!-- here’s the avatar -->
+      <a href="/detail/{{this.id}}">
+        {{#if this.man}}
+            <img src="/assets/doc2.jpg" style="" class="card-img" alt="...">
+            {{else}}
+            <img src="/assets/doc1.jpg" style="" class="card-img" alt="...">
+          {{/if}}
+      </a>
+
+      <!-- the username -->
+      <h1>{{this.prenom}} {{this.nom}}</h1>
+
+      <!-- and role or location -->
+      <h2>{{this.spec}}</h2>
+    </header>
+      <hr>
+    <!-- bit of a bio; who are you? -->
+    <div class="profile-bio" style="color: black; text-align:start;">
+     <ul>
+       <li><i class="fa fa-map-signs mr-3"></i>{{this.adress.street}}</li>
+       <li><i class="fa fa-globe mr-3"></i>{{this.adress.city}}</li>
+       <li><i class="fa fa-map-marker mr-3"></i>{{this.adress.zip}}</li>
+       <li><i class="fa fa-phone mr-3"></i>{{this.numtel}}</li>
+     </ul>
+    </div>
+    <hr>
+
+    <div class="row justify-content-center">
+              <button type="button"  class="btn btn-outline-success col-8 open-rv" data-id="{{this.id}}"  data-toggle="modal" data-target="#datepicker">Rendez-vous</button>
+              <div class="col-1"></div>
+              <button type="button"  class="btn btn-outline-info pull-right col-2 open-msg" data-id="{{this.id}}" 
+              data-toggle="modal" data-target="#exampleModal"><i class="fa fa-envelope"></i></button>
+     </div>
+  </aside>
+    {{/each}}
+    {{else}}
+    {{#each docs}}
+    <aside class="profile-card">
+    <div class="mask-shadow"></div>
+    <header>
+      <!-- here’s the avatar -->
+      <a href="/detail/{{this.id}}">
+        {{#if this.man}}
+            <img src="/assets/doc2.jpg" style="" class="card-img" alt="...">
+            {{else}}
+            <img src="/assets/doc1.jpg" style="" class="card-img" alt="...">
+          {{/if}}
+      </a>
+
+      <!-- the username -->
+      <h1>{{this.prenom}} {{this.nom}}</h1>
+
+      <!-- and role or location -->
+      <h2>{{this.spec}}</h2>
+    </header>
+      <hr>
+    <!-- bit of a bio; who are you? -->
+    <div class="profile-bio" style="color: black; text-align:start;">
+     <ul>
+       <li><i class="fa fa-map-signs mr-3"></i>{{this.adress.street}}</li>
+       <li><i class="fa fa-globe mr-3"></i>{{this.adress.city}}</li>
+       <li><i class="fa fa-map-marker mr-3"></i>{{this.adress.zip}}</li>
+       <li><i class="fa fa-phone mr-3"></i>{{this.numtel}}</li>
+     </ul>
+    </div>
+    <hr>
+    <button class="btn btn-outline-success btn-block pull-right" data-toggle="tooltip" data-placement="top"
+            title="vous devez connecter pour un rendez-vous" disabled>Rendez-vous</button>
+            <small>*Connexion requise</small>
+  </aside>
+    {{/each}}
+    {{/if}}
+  </div>
+  {{else}}
+    <div class="row justify-content-center">
+      <div class="col">
+      <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading">Docteur introuvable ..</h4>
+      <p>Vous n'avez pas choisi un filtre de recherche ou bien le docteur est introuvable, ressayer à nouveau votre recherche.</p>
+      <hr>
+      <div style="text-align: end;">
+        <a href="/acceuil">
+          <button type="button" class="btn btn-secondary"><i class="fa fa-retweet"></i> Actualiser</button>
+        </a>
+        {{#if user}}
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal3"><i class="fa fa-exclamation-triangle"></i> Passer une réclamation</button>
+        {{else}}
+        <button type="button" class="btn btn-warning"  data-toggle="tooltip" data-placement="top"
+            title="vous devez connecter pour un rendez-vous" disabled><i class="fa fa-exclamation-triangle"></i> Passer une réclamation</button>
+        {{/if}}
+      </div>
+    </div>
+    </div>
+    </div>
+    {{/if}}
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Envoyer Messages</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="/sendmsg/{{user.id}}">
+          <input type="text" class="d-none" id="id-doc" value="" name="id_doctor">
+          <div class="form-group">
+          <input type="text" placeholder="Sujet" class="form-control" name="sujet">
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Votre message</span>
+                  </div>
+                  <textarea class="form-control" aria-label="With textarea" name="msg"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-outline-primary btn-block pull-right"><i class="fa fa-paper-plane mr-3"></i>Envoyer</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- datepicker -->
+<div class="modal fade" id="datepicker" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Choisir une date</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <small class="text-info">*La sécretaire est responsable de valider la disponibilité dans cette date</small>
+        <form id="dateform" method="post">
+          <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+            </div>
+            <input type="datetime-local" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" name="date">
+          </div>
+          <hr>
+          <button class="btn btn-success mt-3 btn-block">Passez un rendez vous</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="">
+    $(document).on("click", ".open-msg", function () {
+        var id = $(this).data('id');
+        $('#id-doc').attr('value',id);
+    });
+</script>
+
+
+<script>
+    $(document).on("click", ".open-rv", function () {
+      var id = $(this).data('id');
+      $('#dateform').attr('action','/rendezVous/'+id); 
+    });
+</script>

@@ -1,0 +1,85 @@
+<div class="jumbotron mt-3 pt-3 pb-3">
+  <h1 class="display-3">Liste des Rendez vous</h1>
+  <hr class="my-2">
+  <small>* Lister les Rendez vous pas encore traiter</small><br>
+  <small>** Gestionaire de rendez vous pour Docteur : {{Secretary.id_doctor.nom}} {{Secretary.id_doctor.nom}}</small>
+</div>
+<div class="search-hero mb-3">
+  <input class="form-control" type="text" name="search" [(ngModel)]="searchAppoi" autocomplete="off" placeholder="Chercher un rendez-vous . . .">
+</div>
+<table class="table table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Patient (Nom et prénom)</th>
+      <th scope="col">Email</th>
+      <th scope="col">Télephone</th>
+      <th scope="col">Sexe</th>
+      <th scope="col">Date</th>
+      <th scope="col">Gérer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let rv of myRV | filter: searchAppoi">
+      <td *ngIf="(rv.statue == false) && (rv.cancel == false)" scope="row">{{rv.id_patient.nom}}
+        {{rv.id_patient.prenom}}</td>
+      <td *ngIf="(rv.statue == false) && (rv.cancel == false)">{{rv.id_patient.email}}</td>
+      <td *ngIf="(rv.statue == false) && (rv.cancel == false)">{{rv.id_patient.numtel}}</td>
+      <td *ngIf="(rv.statue == false) && (rv.cancel == false) && (rv.id_patient.man)">Homme</td>
+      <td *ngIf="(rv.statue == false) && (rv.cancel == false) && (!rv.id_patient.man)">Femme</td>
+      <td *ngIf="(rv.statue == false) && (rv.cancel == false)">{{rv.date | date : 'medium' : '':'fr' }}</td>
+      <td *ngIf="(rv.statue == false) && (rv.cancel == false)">
+        <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" (click)="openModal(rv._id,rv.date)"
+          id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-cogs"></i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item text-success" type="button" href="#" data-toggle="modal"
+            data-target="#exampleModal">Accepter</a>
+          <a class="dropdown-item text-danger" (click)='Cancel(RV_id)'>Annuler</a>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="alert alert-warning text-center mt-2" *ngIf='!myRV?.length'>
+  Vous n'avez pas de rendez-vous pour le moment.
+</div>
+
+<div *ngIf="message" class="alert alert-success" role="alert">
+  <strong>{{message}}</strong>
+</div>
+<div *ngIf="danger" class="alert alert-danger" role="alert">
+  <strong>{{danger}}</strong>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Accepter un rendez vous</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #f6="ngForm" (ngSubmit)="OnSubmitAccept(RV_id,f6)">
+          <div class="form-group">
+            <label for="">Date de disponibilité</label>
+            <input type="datetime-local" name="date" disabled id="" class="form-control" placeholder="" aria-describedby="helpId" [(ngModel)]='mydate'>
+          </div>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Prix" aria-label="Username" name="prix"
+              aria-describedby="basic-addon1" ngModel>
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">DT</span>
+            </div>
+          </div>
+          <button type="submit" class="mt-3 btn btn-outline-secondary btn-block">Envoyer</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

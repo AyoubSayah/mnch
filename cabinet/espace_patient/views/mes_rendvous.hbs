@@ -1,0 +1,235 @@
+{{> navbar}}
+<div class="container mb-5">
+    <div class="jumbotron">
+        <h1 class="display-3">Mes Rendez-vous</h1>
+    </div>
+    <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Rendez-vous traités</a>
+        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Rendez-vous en attente</a>
+        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-cancel" role="tab" aria-controls="nav-cancel" aria-selected="false">Rendez-vous annulés</a>
+  </div>
+    </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="container mt-3">
+            {{#if notfound}}
+                    <div class="alert alert-danger" role="alert">
+                        <h5>Vous n'avez pas des rendez_vous pour le moment</h5>
+                    </div>
+            {{else}}    
+                <div class="row row-cols-3">
+                    {{#each rv}}
+                        {{#if this.statue}}
+                        {{#unless this.cancel}}
+                            <div class="col">
+                                <div class="card" style="width: 18rem;">
+                                {{#if this.id_doctor.man}}
+                                    <img src="/assets/doc2.jpg" style="width: 100%;" class="card-img" alt="...">
+                                {{else}}
+                                    <img src="/assets/doc1.jpg" style="width: 100%;" class="card-img" alt="...">
+                                {{/if}}
+                                <div class="card-body">
+                                    <h5 class="card-title">Dr : {{this.id_doctor.nom}} {{this.id_doctor.prenom}}</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Date et heure :{{this.date}}</li>
+                                    <li class="list-group-item">Prix : {{this.prix}} DT</li>
+                                </ul>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <a href="/cancel/{{this.id}}" type="button" style="width: 100%;" class="btn btn-warning">Annuler</a>
+                                        </div>
+                                        <div class="col-6">
+                                            <a  type="button" style="width: 100%;" class="btn btn-success open-rv" data-id="{{this.id}}" data-toggle="modal" data-target="#exampleModal" >Payer</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                         {{/unless}}
+                        {{/if}}
+                    {{/each}}
+                </div>
+            {{/if}}
+        </div>
+    </div>
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div class="container mt-3">
+            {{#if notfound}}
+                    <div class="alert alert-danger" role="alert">
+                        <h5>Vous n'avez pas des rendez_vous pour le moment</h5>
+                    </div>
+            {{else}}    
+                <div class="row row-cols-3">
+                    {{#each rv}}
+                        {{#unless this.statue}}
+                        {{#unless this.cancel}}
+                            <div class="col">
+                                <div class="card" style="width: 18rem;">
+                                {{#if this.id_doctor.man}}
+                                    <img src="/assets/doc2.jpg" style="width: 100%;" class="card-img" alt="...">
+                                {{else}}
+                                    <img src="/assets/doc1.jpg" style="width: 100%;" class="card-img" alt="...">
+                                {{/if}}
+                                <div class="card-body">
+                                    <h5 class="card-title">Dr : {{this.id_doctor.nom}} {{this.id_doctor.prenom}}</h5>
+                                    <p class="card-text">La secrétaire est en cours de traiter votre rendez vous</p>
+                                    <hr>
+                                    <div class="row justify-content-center">
+                                        <div class="col-10">
+                                            <a href="/cancel/{{this.id}}" type="button" style="width: 100%;" class="btn btn-warning">Annuler</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        {{/unless}}
+                        {{/unless}}
+                    {{/each}}
+                </div>
+            {{/if}}
+        </div>
+    </div>
+    <div class="tab-pane fade" id="nav-cancel" role="tabpanel" aria-labelledby="nav-cancel-tab">
+        <div class="container mt-3">
+            <div class="alert alert-danger" role="alert">
+                    <strong>Essayer de changer la date </strong>
+            </div>
+            <div class="row row-cols-3">
+                {{#each rv}}
+                    {{#if this.cancel}}
+                        <div class="col">
+                            <div class="card" style="width: 18rem;">
+                            {{#if this.id_doctor.man}}
+                                <img src="/assets/doc2.jpg"  style="width: 200px;" class="card-img" alt="...">
+                            {{else}}
+                                <img src="/assets/doc1.jpg"  style="width: 200px;" class="card-img " alt="...">
+                            {{/if}}
+                            <div class="card-body">
+                                <h5 class="card-title">Dr : {{this.id_doctor.nom}} {{this.id_doctor.prenom}}</h5>
+                                <p class="card-text">La secrétaire est en cours de traiter votre rendez vous</p>
+                                <hr>
+                                <div class="row justify-content-center">
+                                    <button type="button"  class="btn btn-outline-success open-rv1" data-id="{{this.id_doctor.id}}"  data-toggle="modal" data-target="#datepicker">Reposter un rendez-vous</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="container">
+            <div class="jumbotron jumbotron-fluid" style="padding-top : 30px ; padding-bottom : 30px">
+                <div class="container">
+                    <div class="row justify-content-between">
+                        <div class="col-8">
+                            <h1 class="display-3">Checkout</h1>
+                        </div>
+                        <div class="col-4">
+                            <div class="row mt-5">
+                                <div class="col-6"><img src="https://designmodo.com/demo/checkout-panel/img/visa_logo.png"/></div>
+                                <div class="col-6"><img src="https://designmodo.com/demo/checkout-panel/img/mastercard_logo.png"/></div>                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <form method="post" class="rv" action="">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                    <label for="inputEmail4">Cardholder's Name</label>
+                    <input type="text" class="form-control" id="" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                    <label for="">Card Number</label>
+                    <input type="text" class="form-control" id="">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                    <label for="inputEmail4">Email</label>
+                    <input type="email" class="form-control" id="">
+                    </div>
+                    <div class="form-group col-4">
+                    <label for="">CVV</label>
+                    <input type="text" class="form-control" id="">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                    <label for="inputAddress2">Address</label>
+                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                    </div>
+                    <div class="form-group col-md-6">
+                    <label for="inputCity">City</label>
+                    <input type="text" class="form-control" id="inputCity">
+                    </div>              
+                    <div class="form-group col-md-2">
+                    <label for="inputZip">Zip</label>
+                    <input type="text" class="form-control" id="inputZip">
+                    </div>
+                </div>
+                <hr>
+                <button type="submit" class="btn btn-outline-dark pull-right btn-block col-3">Payer</button>
+                </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- datepicker -->
+<div class="modal fade" id="datepicker" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Choisir une date</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <small class="text-info">*La sécretaire est responsable de valider la disponibilité dans cette date</small>
+        <form id="dateform" method="post">
+          <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+            </div>
+            <input type="datetime-local" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" name="date">
+          </div>
+          <hr>
+          <button class="btn btn-success mt-3 btn-block">Passez un rendez vous</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+    $(document).on("click", ".open-rv1", function () {
+      var id = $(this).data('id');
+      $('#dateform').attr('action','/reposterrv/'+id); 
+    });
+</script>
+
+<script type="">
+    $(document).on("click", ".open-rv", function () {
+        var id = $(this).data('id');
+        $('.rv').attr('action','/makeconsultation/'+id);
+    });
+</script>

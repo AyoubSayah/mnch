@@ -1,0 +1,121 @@
+<div class="container mt-2">
+    <div class="search-hero">
+        <input class="form-control" type="text" name="search" [(ngModel)]="searchDoctor" autocomplete="off"
+            placeholder="Chercher un docteur par son nom, adresse, spécialité . . .">
+    </div>
+    <!-- List all doctors -->
+    <div class="row">
+        <!-- <div class="col-md-3 col-sm-6 item" *ngIf="( ad | filter:searchDoctor)?.length || !ad?.length">
+            <div class="card item-card card-block" data-toggle="modal" data-target="#AddDoctor">
+                <img src="assets/add2.png" alt="Photo of sunset" class="add-img">
+            </div>
+        </div> -->
+        <div class="col-md-3 col-sm-6 item" *ngFor="let doctor of ad | filter:searchDoctor">
+            <div class="card item-card card-block" data-toggle="modal" data-target="#DoctorModal"
+                (click)="doctorInfo(doctor)">
+                <img src="assets/doctor-default.png" alt="Photo of sunset">
+                <h5 class="item-card-title mt-3 mb-3">Dr. {{doctor.nom}} {{doctor.prenom}} <span
+                        *ngIf='!doctor.accepted' class="text-info">(Nouveau demande)</span></h5>
+                <p class="card-text">{{doctor.bio | slice:0:100}}{{ doctor.bio.length > 100 ? ' ...' : '' }}</p>
+            </div>
+            <!-- Modal Doctor BIO -->
+            <div class="modal fade" id="DoctorModal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true" *ngIf="mydoctor">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle ">DR {{mydoctor.nom}} {{mydoctor.prenom}}
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><i class="fa fa-map-o"
+                                        aria-hidden="true "></i>&nbsp;<b>Adresse : </b>{{mydoctor.adress.city}}
+                                    ,{{mydoctor.adress.street}}, {{mydoctor.adress.zip}}</li>
+                                <li class="list-group-item"><i class="fa fa fa-envelope-o"
+                                        aria-hidden="true "></i>&nbsp;<b>Email : </b>{{mydoctor.email}}</li>
+                                <li class="list-group-item"><i class="fa fa-venus-mars"
+                                        aria-hidden="true "></i>&nbsp;<b>Sexe :
+                                    </b>{{ mydoctor.man ? 'Homme' : 'Femme' }}</li>
+                                <li class="list-group-item"><i class="fa fa-medkit"
+                                        aria-hidden="true "></i>&nbsp;<b>Spécialité : </b>{{mydoctor.spec}}</li>
+                                <li class="list-group-item"><i class="fa fa-phone"
+                                        aria-hidden="true "></i>&nbsp;<b>Numéro de téléphone : </b>{{mydoctor.numtel}}
+                                </li>
+                            </ul>
+                            <div *ngIf='mydoctor.id_secrt != null; else EmptySecretary'>
+                                <div class="alert alert-info mt-2 text-center" role="alert">
+                                    Sécretaire associée
+                                </div>
+                                <li class="list-group-item"><i class="fa fa fa-user"
+                                        aria-hidden="true "></i>&nbsp;<b>Nom et prénom : </b>{{mydoctor.id_secrt.nom}}
+                                    {{mydoctor.id_secrt.prenom}}</li>
+                                <li class="list-group-item"><i class="fa fa fa-envelope-o"
+                                        aria-hidden="true "></i>&nbsp;<b>Email : </b>{{mydoctor.id_secrt.email}}</li>
+                            </div>
+                            <ng-template #EmptySecretary>
+                                <div class="alert alert-danger mt-2 text-center" role="alert">
+                                    Pas de sécretaire associée
+                                </div>
+                            </ng-template>
+                            <div class="text-center mt-2 mb-3">
+                                <h4>BIO</h4>
+                            </div>
+                            <div class="card border-light">
+                                <div class="card-body">
+                                    <samp>{{mydoctor.bio}}</samp>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="flex-direction: column;">
+                            <button type="button" class="btn btn-success btn-block" (click)='accept(mydoctor._id)'
+                                data-dismiss="modal" *ngIf='!mydoctor.accepted'>Accepter</button>
+                            <button type="button" class="btn btn-outline-danger btn-block" data-toggle="collapse"
+                                data-target="#collapseExample" aria-expanded="false"
+                                aria-controls="collapseExample">Supprimer<i class="fa fa-trash ml-3"
+                                    aria-hidden="true"></i></button>
+                            <div class="collapse mt-3" id="collapseExample">
+                                <div class="card card-body text-center">
+                                    <h3>
+                                        Voulez-vous vraiment supprimer ce docteur ??
+                                    </h3>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-6"> <button class="btn btn-block btn-info"
+                                                data-dismiss="modal">Annuler</button></div>
+                                        <div class="col-6"> 
+                                            <button type="button" (click)='deleteD(doctor._id)'
+                                                class="col btn btn-block btn-outline-danger" data-dismiss="modal">Supprimer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Modal Doctor BIO -->
+        </div>
+        <div *ngIf="!( ad | filter:searchDoctor)?.length && !emptyBool">
+            <div id="notfound">
+                <div class="notfound">
+                    <div class="notfound-404"></div>
+                    <h1>404</h1>
+                    <h2>Oops! Pas de docteurs</h2>
+                    <a href="admin/doctors">Afficher tous les docteurs</a>
+                </div>
+            </div>
+        </div>
+        <!-- End Doctors not found -->
+    </div>
+    <div class="jumbotron jumbotron-fluid mt-5" *ngIf="!ad?.length">
+        <div class=" container ">
+            <h1 class="display-4 ">Vous n'avez pas de docteurs</h1>
+            <p class="lead "></p>
+        </div>
+    </div>
+    <!-- End List all doctors -->
+</div>

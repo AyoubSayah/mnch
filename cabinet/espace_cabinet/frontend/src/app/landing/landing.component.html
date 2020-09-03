@@ -1,0 +1,309 @@
+<div class="jumbotron vertical-center">
+    <div class="container text-center">
+        <div class="card-deck col-md-12 my-auto">
+            <div class="card">
+                <img class="card-img-top" src="assets/admin.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Administrateur</h5>
+                    <p class="card-text">Connecter vous en tant qu'administrateur.</p>
+                    <p class="card-text"><small class="text-muted"></small></p>
+                    <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#LoginAdmin">Connecter</button>
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="assets/doctor.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Docteur</h5>
+                    <p class="card-text">Connecter vous en tant que docteur.</p>
+                    <p class="card-text"><small class="text-muted"></small></p>
+                    <div class="text-center">
+                        <button class="btn btn-dark mt-4 btn-block" data-toggle="modal" data-target="#LoginDoctor">Connecter</button>
+                        <button class="btn btn-outline-dark mt-4 btn-block" data-toggle="modal" data-target="#RegisterDoctor">Inscrivez-vous</button>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="card">
+                <img class="card-img-top" src="assets/sec.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Sécretaire</h5>
+                    <p class="card-text">Connecter vous en tant que sécretaire.</p>
+                    <p class="card-text"><small class="text-muted"></small></p>
+                    <div class="text-center">
+                        <button class="btn btn-info mt-4 btn-block" data-toggle="modal" data-target="#LoginSec">Connecter</button>
+                        <button class="btn btn-outline-info mt-4 btn-block" data-toggle="modal" data-target="#RegisterSec">Inscrivez-vous</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Login modal Admin  -->
+<div class="modal fade" id="LoginAdmin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered text-left" role="document">
+        <div class="modal-content">
+        <div class="modal-header text-center">
+            <h4 class="modal-title w-100 font-weight-bold">CONNECTER VOUS <span class="text-secondary">[ADMIN]</span></h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form #f="ngForm" (ngSubmit)="onSubmitAdmin(f)">
+                <div class="alert alert-danger text-center" role="alert" *ngIf='alertMessageAdmin != ""'>
+                    {{alertMessageAdmin}}
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail3">Adresse email</label>
+                    <input type="email" class="form-control" id="exampleInputEmail3" aria-describedby="emailHelp"
+                    placeholder="Taper votre adresse email" name="emailAdmin" ngModel required>
+                    <small id="emailHelp" class="form-text text-muted">Vos coordonnées sont sécurisés.</small>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword3">Mot de passe</label>
+                    <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Taper votre mot de passe"
+                    name="passwordAdmin" ngModel required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-secondary">Se connecter</button>
+                </div>
+            </form>
+        </div>
+        
+        </div>
+    </div>
+</div>
+<!--  End Login modal Admin  -->
+
+<!-- Login modal doctor  -->
+
+<div class="modal fade" id="LoginDoctor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+aria-hidden="true">
+
+
+   
+   
+    <div class="modal-dialog modal-dialog-centered text-left" role="document">
+        
+        <div class="modal-content">
+            
+        <div class="modal-header text-center">
+            
+            <h4 class="modal-title w-100 font-weight-bold">CONNECTER VOUS <span class="text-info">[DOCTEUR]</span></h4>
+            
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="vid-container">
+            <video class="bgvid" autoplay="autoplay" muted="muted" preload="auto" loop>
+                <source src="../../assets/Pills_falling10.mp4">
+            </video>
+        <div class="modal-body">
+            <form #f2="ngForm" (ngSubmit)="onSubmitDoctor(f2)">
+                <div class="alert alert-danger text-center" role="alert" *ngIf='alertMessageDoctor != ""'>
+                    {{alertMessageDoctor}}
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail3">Adresse email</label>
+                    <input type="email" class="form-control" id="exampleInputEmail3" aria-describedby="emailHelp"
+                    placeholder="Taper votre adresse email" name="email" ngModel required>
+                    <small id="emailHelp" class="form-text text-muted">Vos coordonnées sont sécurisés.</small>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword3">Mot de passe</label>
+                    <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Taper votre mot de passe"
+                    name="password" ngModel required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-dark">Se connecter</button>
+                </div>
+            </form>
+        </div>
+        
+       
+    </div>
+    </div>
+</div>
+</div>
+<!--  End Login modal Admin  -->
+
+<!-- Register modal doctor  -->
+
+<div class="modal fade" id="RegisterDoctor" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered text-left" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">INSCRIVEZ-VOUS <span class="text-info">[DOCTEUR]</span></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form #f3="ngForm" (ngSubmit)="onSubmitDoctorRegister(f3)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="formGroupExampleInput1">Nom </label>
+                        <input type="text" class="form-control" id="formGroupExampleInput1" placeholder="" name="nom" ngModel required>
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">Prénom</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="" name="prenom" ngModel required>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" ngModel required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Mot de passe</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" name="password" ngModel required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword2">Confirmation mot de passe</label>
+                        <input type="password" class="form-control" id="exampleInputPassword2" name="cpass" ngModel required>
+                    </div>
+                    <hr>
+                    <div class="form-group mt-3">
+                        <label for="inputAddress2">Rue</label>
+                        <input type="text" class="form-control" id="inputAddress2" placeholder="" name="street" ngModel required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                        <label for="inputCity">Gouvernorat</label>
+                        <input type="text" class="form-control" id="inputCity"  name="city" ngModel required>
+                        </div>
+                        <div class="col-1"></div>
+                        <div class="form-group col-md-3">
+                            <label for="inputZip">Code postal</label>
+                            <input type="text" class="form-control" id="inputZip"  name="zip" ngModel required>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="sexe">Sexe:</label>
+                        <select name="man" id="sexe" class="form-control" ngModel>
+                            <option value="true">Homme</option>
+                            <option value="false">Femme</option>
+                        </select>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="">Spécialité</label>
+                        <input type="text" class="form-control" id="" placeholder="" name="spec" ngModel required>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="-">Téléphone</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="+216 .. " aria-label="Username" aria-describedby="basic-addon1" name="numtel" ngModel required> 
+                    </div>
+                    <hr>
+                    <div class="form-group mt-2">
+                        <label for="bio">Bio</label>
+                        <textarea class="form-control" id="bio" rows="3" name="bio" ngModel required></textarea>
+                    </div>
+                </div>
+                
+                <div class="modal-footer text-center d-block">
+                    <button type="submit" class="btn btn-outline-dark">Créez votre compte</button>
+                    <div class="alert alert-danger mt-3" *ngIf='alertEmailExistDoctor != ""'>
+                        {{alertEmailExistDoctor}}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Register modal doctor  -->
+
+
+<!-- Login modal Secr  -->
+<div class="modal fade" id="LoginSec" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered text-left" role="document">
+        <div class="modal-content">
+        <div class="modal-header text-center">
+            <h4 class="modal-title w-100 font-weight-bold">CONNECTER VOUS <span class="text-info">[SECRETAIRE]</span></h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form #f4="ngForm" (ngSubmit)="onSubmitSec(f4)">
+                <div class="alert alert-danger text-center" role="alert" *ngIf='alertMessageDoctor != ""'>
+                    {{alertMessageDoctor}}
+                </div>
+                <div class="form-group">
+                    <label for="">Adresse email</label>
+                    <input type="email" class="form-control" id="" aria-describedby="emailHelp"
+                    placeholder="Taper votre adresse email" name="email" ngModel required>
+                    <small id="emailHelp" class="form-text text-muted">Vos coordonnées sont sécurisés.</small>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword3">Mot de passe</label>
+                    <input type="password" class="form-control" id="" placeholder="Taper votre mot de passe"
+                    name="password" ngModel required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-dark">Se connecter</button>
+                </div>
+            </form>
+        </div>
+        
+        </div>
+    </div>
+</div>
+<!--  End Login modal Secr  -->
+
+<!-- Register modal Secr  -->
+<div class="modal fade" id="RegisterSec" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered text-left" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">INSCRIVEZ-VOUS <span class="text-info">[SERCRETAIRE]</span></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form #f5="ngForm" (ngSubmit)="onSubmitSecRegister(f5)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="formGroupExampleInput1">Nom </label>
+                        <input type="text" class="form-control" id="" placeholder="" name="nom" ngModel required>
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">Prénom</label>
+                        <input type="text" class="form-control" id="" placeholder="" name="prenom" ngModel required>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        <input type="email" class="form-control" id="" aria-describedby="emailHelp" name="email" ngModel required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Mot de passe</label>
+                        <input type="password" class="form-control" id="" name="password" ngModel required>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="">Téléphone</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="+216 .. " aria-label="Username" aria-describedby="basic-addon1" name="numtel" ngModel required> 
+                    </div>
+                    <hr>
+                </div>
+                <div class="modal-footer text-center d-block">
+                    <button type="submit" class="btn btn-outline-dark">Créez votre compte</button>
+                    <div class="alert alert-danger mt-3" *ngIf='alertEmailSecretary != ""'>
+                        {{alertEmailSecretary}}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Register modal Secr  -->

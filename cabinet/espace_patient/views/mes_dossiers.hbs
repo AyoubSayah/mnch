@@ -1,0 +1,43 @@
+{{> navbar}}
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-3">Mes Consultations</h1>
+        <hr class="my-2">
+        <small>** le docteur est le responsable de vous répondre .</small>
+    </div>
+    <hr>
+    {{#if notexist}}
+        <div class="alert alert-danger" role="alert">
+            <strong>Pas de consultations pour vous en ce moment !! </strong>
+        </div>
+    {{else}}
+    <table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+        <th scope="col" style="width: 50px;">Facture</th>
+        <th scope="col">Doctor</th>
+        <th scope="col">Télephone</th>
+        <th scope="col">Date</th>
+        <th scope="col">Fichers médicaux</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr>
+        <th scope="row">
+            <a href="/print/{{this.id}}" class="btn btn-outline-secondary"><i class="fa fa-print"></i></a>
+        </th>
+        <th>{{this.id_doctor.nom}} {{this.id_doctor.prenom}}</th>
+        <td>{{this.id_doctor.numtel}}</td>
+        <td>{{this.id_appointment.date}}</td>
+        <td>
+        {{#each this.files}}
+        <a name="" id="" class="btn btn-outline-info" href="/uploads/files/{{this.file}}" role="button" download><i class="fa fa-file"></i></a>
+        {{/each}}
+        </td>
+        </tr>
+        {{/each}}
+    </tbody>
+    </table>
+    {{/if}}
+</div>

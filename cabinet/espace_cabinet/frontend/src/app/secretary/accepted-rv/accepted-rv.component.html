@@ -1,0 +1,35 @@
+<div class="container mt-2">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 item" *ngFor="let rv of myRV">
+            <div class="card mb-3 border-success" *ngIf ="rv.statue">
+                <div class="card-header">
+                    <b class="text-success mr-3">Rendez vous pour : </b> 
+                    <span>{{rv.id_patient.nom | uppercase}} {{rv.id_patient.prenom | uppercase}}</span>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <h5>Plus d'infos</h5>
+                            <ul>
+                                <li><i class="fa fa-at mr-3"></i>{{rv.id_patient.email}}</li>
+                                <li><i class="fa fa-phone mr-3"></i>{{rv.id_patient.numtel}}</li>
+                                <li *ngIf="rv.id_patient.man"><i class="fa fa-venus-mars mr-3"></i>Homme</li>
+                                <li *ngIf="!rv.id_patient.man"><i class="fa fa-venus-mars mr-3"></i>Femme</li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <h5>Detail rendez vous </h5>
+                            <ul>
+                                <li><i class="fa fa-calendar mr-3"></i>{{rv.date}}</li>
+                                <li><i class="fa fa-dollar mr-3"></i>{{rv.prix}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-warning text-center" role="alert" *ngIf='count_accepted == 0'>
+        Vous n'avez pas de rendez-vous accéptée pour le moment ...
+    </div>
+</div>

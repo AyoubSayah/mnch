@@ -1,0 +1,75 @@
+<div class="container">
+    <div class="jumbotron pb-3 pt-3" *ngIf="notFound; else elseBlock">
+        <h1 class="display-3">Mes messages</h1>
+        <hr class="my-2">
+        <div class="alert alert-warning mt-3" role="alert">
+            Pas de messages pour le moment
+        </div>
+    </div>
+    <ng-template #elseBlock>
+        <div class="jumbotron pb-3 pt-3">
+            <h1 class="display-3">Mes messages</h1>
+            <hr class="my-3">
+        </div>
+        <hr>
+        <div class="accordion" id="accordionExample">
+
+            <div class="card" *ngFor="let message of myMessages">
+                <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                        <a class="btn btn-link text-left text-dark" type="button" data-toggle="collapse"
+                            href="#collapseOne_{{message._id}}" aria-expanded="true" aria-controls="collapseOne">
+                            Conversation avec : <b>{{message.id_patient.nom | uppercase }}
+                                {{message.id_patient.prenom | uppercase}}</b>
+                        </a>
+                        <a class="btn btn-link pull-right text-left" type="button" data-toggle="collapse"
+                            href="#collapseOne_{{message._id}}" aria-expanded="true" aria-controls="collapseOne">
+                            voir
+                        </a>
+                    </h2>
+                    <div class="alert alert-info" role="alert">
+                        <div>
+                            OBJET : {{message.sujet}}
+                        </div>
+                    </div>
+                </div>
+                <div id="collapseOne_{{message._id}}" class="collapse" aria-labelledby="headingOne"
+                    data-parent="#accordionExample">
+                    <div class="card-body text-center">
+                        <div class="row justify-content-center" *ngFor="let conversation of message.conversation">
+                            <div class="col-5">
+                                <div class="alert alert-info pull-right" role="alert"
+                                    *ngIf="conversation.fromPatient; else elseBlock2">
+                                    <b>{{message.id_patient.nom}}:</b> {{conversation.msg}}
+                                </div>
+                                <ng-template #elseBlock2>
+                                    <div class="alert alert-success pull-left" role="alert">
+                                        <b>vous:</b> {{conversation.msg}}
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-5 ml-3">
+                                <hr>
+                                <form class="form-inline ml-5" #f="ngForm" (ngSubmit)="AnswerPatient(f,message._id)"
+                                    novalidate>
+                                    <input type="text" class="d-none" name="id_doctor">
+                                    <div class="form-group mx-sm-3 mb-2">
+                                        <input type="text" class="form-control" id="inputPassword2"
+                                            placeholder="Votre message" name="msg" ngModel>
+                                    </div>
+                                    <button type="submit" class="btn btn-outline-primary mb-2 pull-right"><i
+                                            class="fa fa-paper-plane"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <div class="alert alert-warning text-center" role="alert" *ngIf="!myMessages?.length && !notFound">
+        Vous n'avez pas de messages pour le moment ... 
+    </div>
+</div>

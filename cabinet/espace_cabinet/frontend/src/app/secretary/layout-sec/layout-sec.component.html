@@ -1,0 +1,89 @@
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">Secretaire</div>
+        <div class="list-group list-group-flush">
+            <a routerLink="/secretary/home/{{myid}}" class="list-group-item list-group-item-action bg-light"><i
+                    class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; Acceuil</a>
+            <button routerLink='/secretary/Rendezvous' *ngIf="Secretary.id_doctor == null" disabled
+                class="list-group-item list-group-item-action bg-light"><i class="fa fa-user-md"
+                    aria-hidden="true"></i>&nbsp; Mes Rendez Vous</button>
+            <button routerLink='/secretary/Rendezvous' *ngIf="Secretary.id_doctor != null" data-toggle="collapse"
+                data-target="#collapseExample" class="list-group-item list-group-item-action bg-light"><i
+                    class="fa fa-user-md" aria-hidden="true"></i>&nbsp; Mes Rendez Vous</button>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body" style="padding : 0.25rem;">
+                    <a routerLink="/secretary/acceptedRV" class="list-group-item list-group-item-action bg-light"><i
+                            class="fa fa-check-circle"></i>&nbsp; RV Acceptés</a>
+                    <a routerLink="/secretary/canceledRV" class="list-group-item list-group-item-action bg-light"><i
+                            class="fa fa-times"></i>&nbsp; RV Annulés</a>
+                </div>
+            </div>
+            <!-- <a routerLink="/admin/secretaries" class="list-group-item list-group-item-action bg-light"><i class="fa fa-users" aria-hidden="true"></i>&nbsp; Liste des sécretaires</a>
+            <a routerLink="/admin/patients" class="list-group-item list-group-item-action bg-light"><i class="fa fa-user-o" aria-hidden="true"></i>&nbsp; Liste des patients</a>
+            <a routerLink="/admin/claims" class="list-group-item list-group-item-action bg-light"><i class="fa fa-bullhorn" aria-hidden="true"></i>&nbsp; Liste des réclamations</a> -->
+        </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <button class="btn btn-primary" id="menu-toggle"><i class="fa fa-bars"></i></button>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="messages" style="cursor: pointer;" data-toggle="modal" data-target="#ListAllnotif">
+                    <div class="badge">
+                        <div class="message-count">{{new_notifs}}</div>
+                    </div>
+                </div>
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{name}}</a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/"><i class="fa fa-sign-out"></i> Déconnexion</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- Modal -->
+        <div class="modal fade" id="ListAllnotif" tabindex="-1" role="dialog" aria-labelledby="ListAllnotif"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Mes notifications</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" [ngClass]="(notif.new == true)?'list-group-item-warning':''"
+                                *ngFor="let notif of notifs">
+                                {{notif.body}}
+                            </li>
+                        </ul>
+                        <div class="alert alert-warning" role="alert" *ngIf='!notifs?.length'>
+                            Vous n'avez pas de notifications
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-success" (click)='UpdateNotif();'>Mettre comme
+                            lu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+</div>

@@ -1,0 +1,70 @@
+<div class="container mt-2">
+    <div class="search-hero">
+        <input class="form-control" type="text" name="search" [(ngModel)]="searchClaim" autocomplete="off"
+            placeholder="Chercher une réclamation . . .">
+    </div>
+    <!-- List all claims -->
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 item" *ngFor="let claim of claims | filter:searchClaim">
+            <div class="card mb-3" [ngClass]="(claim.answer == '')?'border-danger':'border-success'">
+                <div class="card-header">
+                    <b [ngClass]="(claim.answer == '')?'text-danger':'text-success'">Réclamation de : </b>
+                    <span>{{claim.id_patient.nom | uppercase}} {{claim.id_patient.prenom | uppercase}}</span>
+                    <button type="button" class="btn btn-labeled float-right"
+                        [ngClass]="(claim.answer == '')?'btn-outline-danger':'btn-outline-success'"
+                        data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <span class="btn-label"><i class="fa fa-trash-o"></i></span></button>
+                </div>
+                <div class="card-body">
+
+                    <div class="collapse mt-3" id="collapseExample">
+                        <div class="card card-body text-center">
+                            <h3>
+                                Voulez-vous vraiment supprimer cette réclamation ??
+                            </h3>
+                            <hr>
+                            <div class="row">
+                                <div class="col-3">
+                                    <button type="button" (click)='deleteClaim(claim._id)'
+                                        class="col btn btn-block btn-outline-danger">Supprimer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <b class="card-title">Objet du réclamation :</b>
+                    <p>{{claim.objectif}}</p>
+                    <b class="card-title">Contenue du réclamation:</b>
+                    <p>{{claim.description}}</p>
+                    <div *ngIf="claim.answer != ''">
+                        <hr class="bg-success">
+                        <b class="card-title">Votre réponse:</b>
+                        <p>{{claim.answer}}</p>
+                    </div>
+                </div>
+                <div class="card-footer" *ngIf="claim.answer == ''">
+                    <form #f="ngForm" (ngSubmit)="onSubmit(f,claim._id)">
+                        <input type="text" class="form-control" name="answer" placeholder="Votre réponse" ngModel>
+                        <button class="btn btn-danger float-right mt-2" type="submit">Répondre</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron jumbotron-fluid mt-2" *ngIf="!( claims | filter:searchClaim)?.length && !emptyBool">
+        <div class=" container text-center">
+            <h1 class="display-4">Introuvable</h1>
+            <p class="lead">Vous n'avez pas de réclamation suite à votre recherche, réessayer à nouveau . . .</p>
+        </div>
+    </div>
+
+    <div class="jumbotron jumbotron-fluid mt-2" *ngIf="!claims?.length">
+        <div class=" container text-center">
+            <h1 class="display-4">Vous n'avez pas de réclamation pour le moment</h1>
+            <p class="lead"></p>
+        </div>
+    </div>
+    <!-- End List all claims -->
+</div>

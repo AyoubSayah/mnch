@@ -1,0 +1,72 @@
+{{> navbar}}
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-3">Mes Réclamations</h1>
+        <hr class="my-2">
+        <small>** l'administrateur est le responsable de vous repondez .</small>
+    </div>
+    <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Boite de réception</a>
+        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Réclamations envoyées</a>
+    </div>
+    </nav>
+    <div class="tab-content mt-5" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="container">
+                {{#if notfound}}
+                        <div class="alert alert-danger" role="alert">
+                            <h5>Vous n'avez pas de réclamations pour le moment</h5>
+                        </div>
+                {{else}}    
+                    <div class="row row-cols-3">
+                        {{#each claim}}
+                            {{#if this.answer}}
+                                <div class="col">
+                                    <div class="card border-success mb-3" style="max-width: 18rem;">
+                                    <div class="card-header bg-transparent border-success">{{this.objectif}}</div>
+                                    <div class="card-body text-secondary">
+                                        <h5 class="card-title">Reponse</h5>
+                                        <p class="card-text">{{this.answer}}</p>
+                                    </div>
+                                    <div class="card-footer text-right  bg-transparent border-success">
+                                        <a href="/deleteClaim/{{this.id}}" type="button" class="btn btn-outline-danger"><i class="fa fa-trash fa-lg"></i></a>
+                                    </div>
+                                    </div>
+                                </div>
+                            {{/if}}
+                        {{/each}}
+                    </div>
+                {{/if}}
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div class="container">
+                {{#if notfound}}
+                    <div class="alert alert-danger mt-3" role="alert">
+                        <h5>Vous n'avez pas de réclamations pour le moment</h5>
+                    </div>
+                {{else}}    
+                <div class="row row-cols-3">
+                    {{#each claim}}
+                        {{#unless this.answer}}
+                            <div class="col">
+                                <div class="card border-secondary mb-3" style="max-width: 18rem;">
+                                <div class="card-header">{{this.objectif}}</div>
+                                <div class="card-body text-secondary">
+                                    <h5 class="card-title">Description</h5>
+                                    <p class="card-text">{{this.description}}</p>
+                                </div>
+                                <div class="card-footer text-right">
+                                    <a  href="/deleteClaim/{{this.id}}" type="button" class="btn btn-outline-danger"><i class="fa fa-trash fa-lg"></i></a>
+                                </div>
+                                </div>
+                            </div>
+                        {{/unless}}
+                    {{/each}}
+                </div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>

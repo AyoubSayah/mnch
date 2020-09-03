@@ -1,0 +1,80 @@
+<div class="jumbotron jumbotron-fluid mt-5">
+    <div class="container text-center">
+        <h1 class="display-4">Mes consultations</h1>
+        <p class="lead">Ici vous trouvez tous vos consultations actuelles.</p>
+    </div>
+</div>
+<table class="table table-hover table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col" *ngIf='myConsultations?.length'></th>
+            <th scope="col">Patient</th>
+            <th scope="col">Email</th>
+            <th scope="col">Télephone</th>
+            <th scope="col">Date</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Fichers médicales</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor='let consultation of myConsultations'>
+            <th><button class="btn btn-info" (click)='archive(consultation._id)'>Archiver</button></th>
+            <th scope="row">{{consultation.id_patient.nom | uppercase }} {{consultation.id_patient.prenom | uppercase}}
+            </th>
+            <td>{{consultation.id_patient.email }}</td>
+            <td>{{consultation.id_patient.numtel }}</td>
+            <td>{{consultation.createdAt| date : 'medium' : '':'fr' }}</td>
+            <td>{{consultation.id_appointment.prix }} Dinars</td>
+            <td *ngIf="!consultation?.files?.length; else ExistFiles" class="text-center">
+                <!-- Button Add file -->
+                <div>
+                    <i class="fa fa-exclamation-triangle" style="font-size:30px;color:red"></i>
+                </div>
+                <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#Addfile" (click)="getConstId(consultation._id)">
+                    <i class="fa fa-plus-square-o"></i>
+                </button>
+                
+            </td>
+            <ng-template #ExistFiles>
+                <td class="text-center">
+                    <div *ngFor='let file of consultation.files'>
+                        <a href="http://localhost:4000/uploads/files/{{file.file}}" target="_blank"><i class="fa fa-file-pdf-o" style="font-size:30px;"></i></a>
+                        <button (click)="delete(consultation._id,file._id)">X</button>
+                    </div>
+                    <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#Addfile" (click)="getConstId(consultation._id)">
+                        <i class="fa fa-plus-square-o"></i>
+                    </button>
+                </td>
+            </ng-template>
+        </tr>
+    </tbody>
+</table>
+<div class="alert alert-info text-center mt-2" *ngIf='!myConsultations?.length'>
+    Vous n'avez pas de consultations pour le moment.
+</div>
+
+<!-- Begin modal upload file -->
+<div class="modal fade" tabindex="-1" role="dialog" id="Addfile">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ajouter un fichier</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup] = "uploadForm" enctype="multipart/form-data" (ngSubmit)='onSubmit(id_const)'>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Votre fichier</label>
+                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="file"
+                        (change)="onFileSelected($event)">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-dark">Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

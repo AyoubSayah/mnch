@@ -1,0 +1,66 @@
+{{> navbar}}
+<div class="container">
+    {{#if notfound}}
+    <div class="jumbotron pb-3 pt-3">
+        <h1 class="display-3">Mes messages</h1>
+        <hr class="my-2">
+        <div class="alert alert-warning mt-3" role="alert">
+            Pas de messages pour le moment
+        </div>
+    </div>
+    {{else}}
+    <div class="jumbotron pb-3 pt-3">
+        <h1 class="display-3">Mes messages</h1>
+        <hr class="my-2">
+    </div>
+    <hr>
+    <div class="accordion" id="accordionExample">
+    {{#each data}}
+        <div class="card">
+            <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+                <button class="btn btn-link text-left" type="button" data-toggle="collapse" data-target="#collapseOne_{{this.id}}" aria-expanded="true" aria-controls="collapseOne">
+                Conversation avec Dr : {{this.id_doctor.nom}} {{this.id_doctor.prenom}}
+                </button>
+                <button class="btn btn-link pull-right text-left" type="button" data-toggle="collapse" data-target="#collapseOne_{{this.id}}" aria-expanded="true" aria-controls="collapseOne">
+                Sujet : {{this.sujet}}
+                </button>
+            </h2>
+            </div>
+
+            <div id="collapseOne_{{this.id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body text-center">
+                {{#each this.conversation}}
+                <div class="row justify-content-center">
+                    <div class="col-5">
+                        {{#if this.fromPatient}}
+                        <div class="alert alert-info pull-right" role="alert">
+                            <b>vous:</b> {{this.msg}}
+                        </div>
+                        {{else}}
+                        <div class="alert alert-success pull-left" role="alert">
+                            <b>{{../this.id_doctor.nom}}:</b>  {{this.msg}}
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+                {{/each}}
+                <div class="row justify-content-center">
+                <div class="col-5 ml-3">
+                    <hr>
+                <form class="form-inline ml-5" method="POST" action="/sendmsg/{{this.id_patient}}">
+                <input type="text" class="d-none" name="id_doctor" value="{{this.id_doctor.id}}">
+                <div class="form-group mx-sm-3 mb-2">
+                    <input type="text" class="form-control" id="inputPassword2" placeholder="Votre message" name="msg">
+                </div>
+                <button type="submit" class="btn btn-outline-primary mb-2 pull-right"><i class="fa fa-paper-plane"></i></button>
+                </form>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    {{/each}}  
+    </div> 
+    {{/if}}
+</div>

@@ -1,0 +1,38 @@
+<div class="jumbotron jumbotron-fluid mt-5">
+    <div class="container text-center">
+        <h1 class="display-4">Mes consultations</h1>
+        <p class="lead">Ici vous trouvez tous vos consultations archivées.</p>
+    </div>
+</div>
+<table class="table table-hover table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Patient</th>
+            <th scope="col">Email</th>
+            <th scope="col">Télephone</th>
+            <th scope="col">Date</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Fichers médicales</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor='let consultation of myConsultations'>
+            <th scope="row">{{consultation.id_patient.nom | uppercase }} {{consultation.id_patient.prenom | uppercase}}</th>
+            <td>{{consultation.id_patient.email }}</td>
+            <td>{{consultation.id_patient.numtel }}</td>
+            <td>{{consultation.createdAt| date : 'medium' : '':'fr' }}</td>
+            <td>{{consultation.id_appointment.prix }} Dinars</td>
+            <td *ngIf="!consultation?.files?.length; else ExistFiles" class="text-center"><i class="fa fa-exclamation-triangle" style="font-size:30px;color:red"></i></td>
+            <ng-template #ExistFiles>
+                <td class="text-center">
+                    <div *ngFor='let file of consultation.files'>
+                        <a href="http://localhost:4000/uploads/files/{{file.file}}" target="_blank"><i class="fa fa-file-pdf-o" style="font-size:30px;"></i></a>
+                    </div>
+                </td>
+            </ng-template>
+        </tr>
+    </tbody>
+</table>
+<div class="alert alert-warning text-center mt-2" *ngIf='!myConsultations?.length'>
+    Vous n'avez pas de consultations archivés pour le moment.
+</div>

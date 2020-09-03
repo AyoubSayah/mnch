@@ -1,0 +1,109 @@
+{{> navbar}}
+
+<div class="back">
+<div class="cont">
+    <div class="row justify-content-center">
+        <div class="col-3">
+            <div class="card1 mt-3" style="width: 200px ; height:200px">
+            {{#if doc.man}}
+            <img src="/assets/doc2.jpg" style="width: 100%;" class="card-img" alt="...">
+            {{else}}
+            <img src="/assets/doc1.jpg" style="width: 100%;" class="card-img" alt="...">
+            {{/if}}   
+            </div>
+        </div>
+        <div class="col-4 mt-1">
+            <h3>Information : </h3>
+            <div class="input-group mb-3 mt-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Prénom</span>
+            </div>
+            <input type="text" class="form-control" value="{{doc.nom}}" aria-label="Username" aria-describedby="basic-addon1"  readonly>
+            </div>
+            <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Nom</span>
+            </div>
+            <input type="text" class="form-control" value="{{doc.prenom}}" aria-label="Username" aria-describedby="basic-addon1"  readonly>
+            </div>
+            <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">E-mail</span>
+            </div>
+            <input type="text" class="form-control" value="{{doc.email}}" aria-label="Username" aria-describedby="basic-addon1"  readonly>
+            </div>
+            <form action="/rendezVous/{{doc.id}}" method="post">
+                <button type="submit"  class="btn btn-success pull-right " {{#unless user}}disabled{{/unless}}>Rendez-vous <i class="fa fa-check"></i> </button>
+            </form>
+        </div>
+    </div>
+    <ul class="nav nav-tabs mb-5" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Bioghraphie</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+    </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <h3>Bioghraphie :</h3>
+        <p>{{doc.bio}}</p>
+    </div>
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-4">
+                    <h3>Info Secrétaire :</h3>
+                    <div class="input-group mb-3 mt-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Prénom</span>
+                    </div>
+                    <input type="text" class="form-control" value="{{doc.id_secrt.nom}}" aria-label="Username" aria-describedby="basic-addon1"  readonly>
+                    </div>
+                    <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Nom</span>
+                    </div>
+                    <input type="text" class="form-control" value="{{doc.id_secrt.prenom}}" aria-label="Username" aria-describedby="basic-addon1"  readonly>
+                    </div>
+                    <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">E-mail</span>
+                    </div>
+                    <input type="text" class="form-control" value="{{doc.id_secrt.email}}" aria-label="Username" aria-describedby="basic-addon1"  readonly>
+                    </div>
+                    <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Téléphone</span>
+                    </div>
+                    <input type="text" class="form-control" value="{{doc.id_secrt.numtel}}" aria-label="Username" aria-describedby="basic-addon1"  readonly>
+                    </div>
+                </div>
+                <div class="col-2"></div>
+                <div class="col-5">
+                    <h3>Adresse cabinet :</h3>
+                    <div class="input-group mb-3 mt-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Rue</span>
+                    </div>
+                    <input type="text" class="form-control" value="{{doc.adress.street}}" aria-label="Username" aria-describedby="basic-addon1"  readonly>
+                    </div>
+                    <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Gouvernorat</span>
+                    </div>
+                    <input type="text" class="form-control" value="{{doc.adress.city}}" aria-label="Username" aria-describedby="basic-addon1"  readonly>
+                    </div>
+                    <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Code postal</span>
+                    </div>
+                    <input type="text" class="form-control" value="{{doc.adress.zip}}" aria-label="Username" aria-describedby="basic-addon1"  readonly>
+                    </div>
+                </div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>

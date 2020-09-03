@@ -1,0 +1,95 @@
+<div class="jumbotron mt-3 pt-5">
+    <div class="row">
+    <div class="col-8">
+        <h1 class="display-3">{{Secretary.nom}} {{Secretary.prenom}}</h1>
+        <p class="lead"><i class="fa fa-at mr-3"></i>{{Secretary.email}}</p>
+        <p class="lead"><i class="fa fa-mobile mr-3"></i>{{Secretary.numtel}}</p>
+    </div>
+    <div class="col-4">
+        <img src="assets/secretaryy.png" class="d-block pull-right" style="width: 200px;" alt="Photo of sunset">
+    </div>
+    <button type="button" class="btn btn-outline-info mr-3 btn-block" data-toggle="modal" data-target="#updateSec" ><i class="fa fa-edit mr-3"></i>Modifiez vos informations</button>
+    </div>
+    <hr class="my-2">
+    <div *ngIf = "Secretary.id_doctor != null" >
+    <h3>Informations Docteur : </h3>
+    <ul>
+        <li><i class="fa fa-user mr-3" ></i>{{Secretary.id_doctor.nom}}</li>
+        <li><i class="fa fa-user mr-3"></i>{{Secretary.id_doctor.prenom}}</li>
+        <li><i class="fa fa-at mr-3"></i>{{Secretary.id_doctor.email}}</li>
+        <li><i class="fa fa-file mr-3" ></i>{{Secretary.id_doctor.spec}}</li>
+        <li><i class="fa fa-phone mr-3"></i>{{Secretary.id_doctor.numtel}}</li>
+        <li>Adresse :<ul>
+            <li>Rue : {{Secretary.id_doctor.adress.street}}</li>
+            <li>Ville : {{Secretary.id_doctor.adress.city}}</li>
+            <li>Code postal : {{Secretary.id_doctor.adress.zip}}</li>
+        </ul></li>
+    </ul>
+    </div>
+    <div class="mt-5" *ngIf = "Secretary.id_doctor == null" >
+        <div class="alert alert-info text-center" role="alert">
+            Pas de docteur pour le moment !! souhaitant que vous trouvez une poste prochainement
+        </div>
+    </div>
+    
+</div>
+
+
+
+
+
+<!-- update modal Secr  -->
+<div class="modal fade" id="updateSec" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered text-left" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Modifier les infos <span class="text-info">[SERCRETAIRE]</span></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form #f6="ngForm" (ngSubmit)="updateProfile(myid,f6)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="formGroupExampleInput1">Nom </label>
+                        <input type="text" class="form-control" id="" placeholder="" name="nom"  [(ngModel)]="Secretary.nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">Prénom</label>
+                        <input type="text" class="form-control" id="" placeholder="" name="prenom"  [(ngModel)]="Secretary.prenom" required>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        <input type="email" class="form-control" id="" aria-describedby="emailHelp" name="email"  [(ngModel)]="Secretary.email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Nouveau mot de passe</label>
+                        <input type="password" class="form-control" id="" name="newPassword" ngModel  required>
+                    </div>
+                    <hr>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="">Téléphone</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="+216 .. " aria-label="Username" aria-describedby="basic-addon1" name="numtel"  [(ngModel)]="Secretary.numtel" required> 
+                    </div>
+                    <hr>
+                    <div class="alert alert-danger text-center" *ngIf="alert">
+                        {{alert}}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Ancien mot de passe</label>
+                        <input type="password" class="form-control" id="" name="password" ngModel  required>
+                        <small class="text-danger">Veuiller écrire votre ancien mot de passe pour effectuer le changement</small>
+                    </div>
+                </div>
+                <div class="modal-footer text-center d-block">
+                    <button type="submit" class="btn btn-outline-dark btn-block">Modifiez Vos infos</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- update modal Secr  -->

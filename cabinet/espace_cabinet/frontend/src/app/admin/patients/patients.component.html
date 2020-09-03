@@ -1,0 +1,55 @@
+<div class="container mt-2">
+    <div class="search-hero">
+        <input class="form-control" type="text" name="search" [(ngModel)]="searchPatient" autocomplete="off" placeholder="Chercher un patient par son nom, adresse . . .">
+    </div>
+    <!-- List all patients -->
+    <div class="row">
+        <div class="col-12 mt-3 mb-3" *ngFor="let patient of patients | filter:searchPatient">
+            <div class="card">
+                <div class="card-horizontal">
+                    <div class="img-square-wrapper">
+                        <img class="" src="{{cdn}}{{patient.photo}}" alt="Card image cap" *ngIf="patient?.photo; else defaultPictureUser">
+                        <ng-template #defaultPictureUser>
+                            <img class="" src="assets/nopicuser.png" alt="default picture user">
+                        </ng-template>
+                    </div>
+                    <div class="card-body text-left">
+                        <h4 class="card-title">{{patient.nom | uppercase}} {{patient.prenom | uppercase}}</h4>
+                        <div class="row card-text m-t-4">
+                            <div class="col-6">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><i class="fa fa-map-o" aria-hidden="true "></i>&nbsp;<b>Adresse : </b>{{patient.adress.city}} ,{{patient.adress.street}}, {{patient.adress.zip}}</li>
+                                    <li class="list-group-item"><i class="fa fa fa-envelope-o" aria-hidden="true "></i>&nbsp;<b>Email : </b>{{patient.email}}</li>
+                                </ul>
+                            </div>
+                            <div class="col-6">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><i class="fa fa-venus-mars" aria-hidden="true "></i>&nbsp;<b>Sexe : </b>{{ patient.man ? 'Homme' : 'Femme' }}</li>
+                                    <li class="list-group-item"><i class="fa fa-phone" aria-hidden="true "></i>&nbsp;<b>Numéro de téléphone : </b>{{patient.numtel}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted"> <span class="badge badge-info">Crée le :</span> {{patient.createdAt | date : 'fullDate' : '':'fr' }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron jumbotron-fluid mt-5" *ngIf="!patients?.length">
+        <div class=" container ">
+            <h1 class="display-4 ">Il n'y a pas de patients pour le moments . . .</h1>
+            <p class="lead "></p>
+        </div>
+    </div>
+    <div class="jumbotron jumbotron-fluid mt-5" *ngIf="!( patients | filter:searchPatient)?.length && !emptyBool">
+        <div class=" container ">
+            <h1 class="display-4 ">Pas de résultats</h1>
+            <p class="lead ">Nous n'avons trouvé aucun patient après votre recherche, veuillez réessayer à nouveau . . .</p>
+        </div>
+    </div>
+    <!-- End List all patients -->
+</div>
+
+
